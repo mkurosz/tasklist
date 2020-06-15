@@ -1,0 +1,90 @@
+<div class="main-container">
+  <div class="taskboard">
+    <div class="container">
+      <h2>To do</h2>
+      <div cdkDropList
+           #todoList="cdkDropList"
+           [cdkDropListData]="board.todo"
+           [cdkDropListConnectedTo]="[inProgressList, doneList]"
+           class="list"
+           (cdkDropListDropped)="drop($event)"
+           id="todo"
+      >
+        <div class="list-item" *ngFor="let task of board.todo" cdkDrag>
+          <div class="list-item-container">
+            <button
+              class="delete-task-icon"
+              mat-icon-button
+              color="basic"
+              (click)="deleteTask(task)"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+            {{ task.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>In progress</h2>
+      <div cdkDropList
+           #inProgressList="cdkDropList"
+           [cdkDropListData]="board.inProgress"
+           [cdkDropListConnectedTo]="[todoList, doneList]"
+           class="list"
+           (cdkDropListDropped)="drop($event)"
+           id="inProgress"
+      >
+        <div class="list-item" *ngFor="let task of board.inProgress" cdkDrag>
+          <div class="list-item-container">
+            <button
+              class="delete-task-icon"
+              mat-icon-button
+              color="basic"
+              (click)="deleteTask(task)"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+            {{ task.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Done</h2>
+      <div cdkDropList
+           #doneList="cdkDropList"
+           [cdkDropListData]="board.done"
+           [cdkDropListConnectedTo]="[todoList, inProgressList]"
+           class="list"
+           (cdkDropListDropped)="drop($event)"
+           id="done"
+      >
+        <div class="list-item" *ngFor="let task of board.done" cdkDrag [cdkDragData]="task">
+          <div class="list-item-container">
+            <button
+              class="delete-task-icon"
+              mat-icon-button
+              color="basic"
+              (click)="deleteTask(task)"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+            {{ task.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  mat-raised-button
+  class="button add-task"
+  #add="addTask"
+  [addTask]="board"
+  (taskCreated)="onTaskCreated($event)"
+>
+  Add task
+</button>

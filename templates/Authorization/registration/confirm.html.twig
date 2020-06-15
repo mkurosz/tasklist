@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirm your email{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Please confirm your Email</h1>
+
+    <p>Please check your email inbox to find the email containing verification link.</p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}

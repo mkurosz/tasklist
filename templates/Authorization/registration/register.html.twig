@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Register to use your personalized task list</h1>
+
+    {{ form_start(registrationForm) }}
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+
+        <label>
+            {{ form_widget(registrationForm.email) }}
+            <span>{{ form_label(registrationForm.email) }}</span>
+        </label>
+        {{ form_errors(registrationForm.email) }}
+
+        <label>
+            {{ form_widget(registrationForm.plainPassword) }}
+            <span>{{ form_label(registrationForm.plainPassword) }}</span>
+        </label>
+        {{ form_errors(registrationForm.plainPassword) }}
+
+        <div class="checkbox-container">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            <span>{{ form_label(registrationForm.agreeTerms) }}</span>
+        </div>
+        {{ form_errors(registrationForm.agreeTerms) }}
+
+        <button type="submit">Register</button>
+    {{ form_end(registrationForm) }}
+    <a href="{{ path('app_login') }}">Already have an account?</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}

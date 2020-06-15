@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <h1>Log in to your task list</h1>
+
+    <form class="signin-form" method="post">
+        {% for flashError in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">{{ flashError }}</div>
+        {% endfor %}
+        {% if error %}
+            <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <label>
+            <input type="email" name="email" id="inputEmail" value="{{ last_username }}" class="form-control" placeholder="Email address" required autofocus>
+            <span>Email address</span>
+        </label>
+        <label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <span>Password</span>
+        </label>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button type="submit">Sign in</button>
+    </form>
+    <a href="{{ path('app_register') }}">Not have account yet?</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}

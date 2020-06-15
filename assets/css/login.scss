@@ -1,0 +1,127 @@
+body {
+    background: #35dc9b;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    margin: 0 auto 40px;
+    color: #fff;
+    font: 24px Helvetica;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+p, a {
+    color: #fff;
+    font: 18px Helvetica;
+}
+
+a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+button, a.button-link {
+    transition: all 0.2s ease-in-out;
+    font: 18px Helvetica, Arial, sans-serif;
+    border: none;
+    background: #1aaf75;
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 5px;
+
+    &:hover {
+        background: #109f67;
+    }
+}
+
+form {
+    margin-bottom: 25px;
+
+    label {
+        position: relative;
+        display: block;
+
+        input {
+            font: 18px Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            display: block;
+            border: none;
+            padding: 20px;
+            width: 300px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            border-radius: 5px;
+
+            &::placeholder {
+                transition: all 0.2s ease-in-out;
+                color: #999;
+                font: 18px Helvetica, Arial, sans-serif;
+            }
+
+            &:focus, &.populated {
+                padding-top: 28px;
+                padding-bottom: 12px;
+
+                &::placeholder {
+                    color: transparent;
+                }
+
+                & + span {
+                    opacity: 1;
+                    top: 10px;
+                }
+            }
+        }
+
+        span {
+            color: #35dc9b;
+            font: 13px Helvetica, Arial, sans-serif;
+            position: absolute;
+            top: 0px;
+            left: 20px;
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+    div.checkbox-container {
+        display: block;
+        position: static;
+        height: 35px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        clear: both;
+
+        input[type="checkbox"] {
+            float: left;
+            margin-right: 10px;
+            margin-top: 3px;
+            width: 25px;
+            height: 25px;
+        }
+
+        span {
+            margin-top: 5px;
+            float: left;
+            color: #fff;
+            font: 18px Helvetica, Arial, sans-serif;
+        }
+    }
+
+    div.alert {
+        font: 18px Helvetica, Arial, sans-serif;
+        color: #fff;
+        padding: 10px 0px;
+    }
+}

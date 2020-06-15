@@ -1,0 +1,49 @@
+<div mat-dialog-title>
+  Add task
+</div>
+
+<div mat-dialog-content class="content">
+  <form fxLayout="column" #formElement="ngForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        name="name"
+        [(ngModel)]="task.name"
+        required
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select
+        placeholder="Status"
+        required
+        [(ngModel)]="task.status"
+        name="status"
+      >
+        <mat-option
+          *ngFor="let status of statuses"
+          [value]="status"
+        >
+          {{status.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="createError" class="request-error">{{ createError }}</div>
+  </form>
+</div>
+
+<mat-dialog-actions fxLayout="column" fxLayoutGap="5px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="createTask()"
+      [disabled]="!formElement.valid || inProgress"
+    >
+      Create
+    </button>
+    <button mat-raised-button [mat-dialog-close]="false" [disabled]="inProgress">Cancel</button>
+  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="inProgress"></mat-progress-bar>
+</mat-dialog-actions>

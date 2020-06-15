@@ -1,3 +1,48 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+homepage:
+    path: /
+    controller: Tasklist\Common\Controller\HomepageController::index
+
+app_register:
+    path: /register
+    controller: Tasklist\Authorization\Controller\RegistrationController::register
+
+confirm_email:
+    path: /confirm/email
+    controller: Tasklist\Authorization\Controller\RegistrationController::confirmUserEmail
+
+app_verify_email:
+    path: /verify/email
+    controller: Tasklist\Authorization\Controller\RegistrationController::verifyUserEmail
+
+app_login:
+    path: /login
+    controller: Tasklist\Authorization\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: Tasklist\Authorization\Controller\SecurityController::logout
+
+dashboard:
+    path: /dashboard
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /app
+        permanent: true
+
+boards:
+    type: rest
+    prefix: /api
+    resource: Tasklist\Task\Controller\BoardsController
+
+tasks:
+    type: rest
+    prefix: /api
+    resource: Tasklist\Task\Controller\TasksController
+
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+api_login_check:
+    path: /api/login-check

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('login') }}
+{% endblock %}
+
+{% block body %}
+    <h1>This is tasklist app demo</h1>
+
+    <p>This app requires authentication, so if you have existing account</p>
+    <p>you can</p>
+    <a class="button-link" href="{{ path('app_login') }}">Log in</a>
+    <p>to the app.</p>
+
+    <p>Otherwise you can</p>
+    <a class="button-link" href="{{ path('app_register') }}">Register</a>
+    <p>new account.</p>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('login') }}
+{% endblock %}
