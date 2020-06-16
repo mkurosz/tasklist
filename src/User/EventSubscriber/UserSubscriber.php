@@ -51,15 +51,7 @@ class UserSubscriber implements EventSubscriberInterface
         try {
             $user = $event->getUser();
 
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
-                (new TemplatedEmail())
-                    ->from(new Address('noreply@kurosz.pl', 'Tasklist App'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('user/email/confirmation.html.twig')
-            );
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user);
         } catch (TransportExceptionInterface $e) {
             $this->logger->error(
                 $e->getMessage(),

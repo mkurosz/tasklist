@@ -15,7 +15,7 @@
     "app:watch": "npm run watch",
     "build:prod": "npm run rimraf -- dist && npm run build -- --prod && npm run move:prod",
     "build:dev": "npm run rimraf -- ../dist && npm run build -- --outputPath=../dist",
-    "move:prod": "npm run rimraf -- ../dist && npm run ncp -- dist ../dist",
+    "move:prod": "npm run rimraf -- ../dist && npm run ncp -- dist ../../public/app",
     "watch": "npm run build:dev -- --watch"
   },
   "private": true,

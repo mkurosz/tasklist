@@ -1,5 +1,9 @@
 .idea/
 .env
+/angular/dist/
+!angular/dist/.gitkeep
+/public/app/
+!public/app/.htaccess
 var/
 vendor/
 

@@ -7,6 +7,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Security\Core\User\UserInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -43,33 +44,55 @@ class EmailVerifier
     private $userRepository;
 
     /**
+     * App email address.
+     *
+     * @var string
+     */
+    private $appEmailAddress;
+
+    /**
+     * App email from name.
+     *
+     * @var string
+     */
+    private $appEmailFromName;
+
+    /**
      * EmailVerifier constructor.
      *
      * @param VerifyEmailHelperInterface $helper
      * @param MailerInterface $mailer
      * @param EntityManagerInterface $entityManager
      * @param UserRepository $userRepository
+     * @param string $appEmailAddress
+     * @param string $appEmailFromName
      */
     public function __construct(
         VerifyEmailHelperInterface $helper,
         MailerInterface $mailer,
         EntityManagerInterface $entityManager,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        string $appEmailAddress,
+        string $appEmailFromName
     ) {
         $this->verifyEmailHelper = $helper;
         $this->mailer = $mailer;
         $this->entityManager = $entityManager;
         $this->userRepository = $userRepository;
+        $this->appEmailAddress = $appEmailAddress;
+        $this->appEmailFromName = $appEmailFromName;
     }
 
     /**
      * @param string $verifyEmailRouteName
      * @param UserInterface $user
-     * @param TemplatedEmail $email
+     *
      * @throws TransportExceptionInterface
      */
-    public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void
+    public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user): void
     {
+        $email = $this->prepareConfirmationEmail($user);
+
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
             $user->getId(),
@@ -107,5 +130,19 @@ class EmailVerifier
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return TemplatedEmail $email
+     */
+    private function prepareConfirmationEmail(UserInterface $user): TemplatedEmail
+    {
+        return (new TemplatedEmail())
+            ->from(new Address($this->appEmailAddress, $this->appEmailFromName))
+            ->to($user->getEmail())
+            ->subject('Please Confirm your Email')
+            ->htmlTemplate('User/email/confirmation.html.twig');
     }
 }
